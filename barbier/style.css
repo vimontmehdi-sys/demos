@@ -398,3 +398,6 @@ html.rm .rituel-pin { height: auto; }
   .done-stage { height: 200px; }
   .steam { top: 10px; height: 190px; }
 }
+
+/* Le formulaire masqué après confirmation ne doit plus occuper de place (sinon grand vide noir en remontant). */
+#order[hidden], #done[hidden] { display: none !important; }
