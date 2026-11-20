@@ -218,25 +218,6 @@
     wrap.addEventListener('pointerleave', () => { if (G) G.to(gcard, { rotationY: 0, rotationX: 0, duration: 1, ease: 'elastic.out(1, .5)' }); });
   }
 
-  /* ───────── Curseur lame (bureau) ───────── */
-  if (!RM && H.classList.contains('fine') && G) {
-    const cur = $('#cursor'), svg = $('svg', cur);
-    const qx = G.quickTo(cur, 'x', { duration: .18, ease: 'power3.out' }), qy = G.quickTo(cur, 'y', { duration: .18, ease: 'power3.out' });
-    let px = 0, py = 0, ang = -20;
-    addEventListener('pointermove', (e) => {
-      if (e.pointerType !== 'mouse') return;
-      H.classList.add('cursor-on');
-      const dx = e.clientX - px, dy = e.clientY - py; px = e.clientX; py = e.clientY;
-      if (dx * dx + dy * dy > 9) { const a = Math.atan2(dy, dx) * 180 / Math.PI; let d = a - ang; d = ((d + 540) % 360) - 180; ang += d * .25; }
-      qx(e.clientX); qy(e.clientY); G.set(cur, { rotation: ang });
-      const t = e.target.closest ? e.target.closest('a, button, .tarif, .gcard-wrap') : null;
-      cur.classList.toggle('hover', !!t);
-      cur.classList.toggle('hide', !!(e.target.closest && e.target.closest('input')));
-    }, { passive: true });
-    document.addEventListener('mouseleave', () => H.classList.remove('cursor-on'));
-    void svg;
-  }
-
   /* ───────── Si animations désactivées : on s'arrête là ───────── */
   if (!ANIM) { window.__ready = true; return; }
 
