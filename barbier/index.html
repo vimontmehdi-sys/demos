@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="fr" class="js-loading">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Barberie Valdombre — Barbier à Port-Lunaire (site de démonstration)</title>
+<meta name="description" content="Barberie Valdombre, barbier fictif à Port-Lunaire : coupes, barbe, rasage à l'ancienne, rendez-vous en ligne, abonnement et cartes cadeaux. Site de démonstration.">
+<meta name="theme-color" content="#0c0b0a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ctext y='8.5' font-size='9'%3E%E2%9C%82%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5.3.0/wght-italic.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/manrope@5.3.0/index.css">
+<link rel="stylesheet" href="style.css">
+<script>
+  // Classes de contexte, avant tout rendu : mouvement réduit, écran tactile.
+  (function () {
+    var h = document.documentElement;
+    h.classList.remove('js-loading'); h.classList.add('js');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('rm');
+    if (matchMedia('(hover: hover) and (pointer: fine)').matches) h.classList.add('fine');
+  })();
+</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/"}}</script>
+</head>
+<body>
+<a class="skip" href="#tarifs">Aller aux tarifs</a>
+
+<!-- Ouverture : ruban coupé par les ciseaux, reflet du rasoir sur le titre -->
+<div id="intro" aria-hidden="true">
+  <div class="intro-stage" data-view="intro"></div>
+  <p class="intro-kicker"><span>Barbier</span><span>·</span><span>Port-Lunaire</span><span>·</span><span>depuis 2016</span></p>
+  <h2 class="intro-title"><span class="it-l1">Barberie</span><span class="it-l2">Valdombre</span></h2>
+  <div class="ribbon">
+    <div class="ribbon-half left"></div>
+    <div class="ribbon-half right"></div>
+  </div>
+  <div class="cut-flash"></div>
+  <button type="button" class="intro-skip">Passer <span aria-hidden="true">→</span></button>
+</div>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+<div id="cursor" aria-hidden="true"><svg viewBox="0 0 40 16" width="40" height="16"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#c9ccd1"/><stop offset="1" stop-color="#7d8288"/></linearGradient></defs><path d="M2 8 L30 3 Q38 4 38 8 Q38 12 30 13 Z" fill="url(#cg)" stroke="#2a2a2a" stroke-width=".6"/><path d="M2 8 L38 8" stroke="#fff" stroke-width=".5" opacity=".8"/></svg></div>
+<div class="pole" aria-hidden="true"><i></i></div>
+
+<div class="demo-bar">Site de démonstration — commerce fictif</div>
+
+<header class="top">
+  <a class="logo" href="#accueil">Barberie <em>Valdombre</em></a>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu"><span></span><span></span></button>
+  <nav id="menu" aria-label="Navigation principale">
+    <a href="#rituel">Le rituel</a><a href="#tarifs">Tarifs</a><a href="#galerie">Coupes</a><a href="#rdv">L'équipe</a><a href="#abonnement">Abonnement</a><a href="#cadeaux">Cartes cadeaux</a><a href="#contact">Horaires</a>
+  </nav>
+  <a class="btn btn-sm" href="#rdv"><span>Prendre RDV</span></a>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero" id="accueil">
+  <div class="hero-photo" data-parallax><img src="photos/salon.webp" alt="Fauteuils de barbier alignés dans un salon" width="800" height="600"></div>
+  <div class="hero-text">
+    <p class="kicker" data-a="fade">Barbier · Port-Lunaire · depuis 2016</p>
+    <h1 class="hero-title"><span class="ln"><span>Coupe nette.</span></span><span class="ln"><span><em>Barbe soignée.</em></span></span><span class="ln"><span>Serviette chaude.</span></span></h1>
+    <p class="hero-lead" data-a="fade">Trois barbiers, un fauteuil pour vous. Réservez en ligne, choisissez votre barbier et votre créneau.</p>
+    <p class="hero-cta" data-a="fade"><a class="btn" href="#rdv"><span>Prendre rendez-vous</span></a> <a class="btn ghost" href="#tarifs"><span>Voir les tarifs</span></a></p>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"><span>Défiler</span><i></i></div>
+</section>
+
+<!-- Bandeau défilant -->
+<section class="band" aria-label="Nos engagements">
+  <div class="marquee"><div class="mq-track">
+    <ul class="usp">
+      <li><strong>Sur rendez-vous</strong> sans attente</li>
+      <li><strong>Rasoir droit</strong> et serviette chaude</li>
+      <li><strong>Dès 15 €</strong> la taille de barbe</li>
+      <li><strong>Abonnement</strong> dès 39 € / mois</li>
+    </ul>
+    <ul class="usp" aria-hidden="true">
+      <li><strong>Sur rendez-vous</strong> sans attente</li>
+      <li><strong>Rasoir droit</strong> et serviette chaude</li>
+      <li><strong>Dès 15 €</strong> la taille de barbe</li>
+      <li><strong>Abonnement</strong> dès 39 € / mois</li>
+    </ul>
+  </div></div>
+</section>
+
+<!-- LE RITUEL : rasoir épinglé -->
+<section class="rituel" id="rituel">
+  <div class="rituel-pin">
+    <div class="rituel-stage" data-view="razor"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 200 80"><path d="M10 50 Q60 20 150 22 Q190 24 190 40 Q170 58 120 56 L40 58 Z" fill="#c9ccd1"/><rect x="10" y="56" width="120" height="12" rx="6" fill="#6b3e22"/></svg></div></div>
+    <div class="rituel-text">
+      <p class="kicker">Le rituel Valdombre</p>
+      <h2 class="h2" data-a="chars">Quatre gestes, sans se presser.</h2>
+      <ol class="steps">
+        <li class="step on"><span class="num">01</span><h3>On écoute</h3><p>Ce que vous voulez, votre rythme d'entretien, la forme du visage. Puis on propose.</p></li>
+        <li class="step"><span class="num">02</span><h3>Serviette chaude</h3><p>La vapeur ouvre les pores et assouplit le poil. Deux minutes, les épaules descendent.</p></li>
+        <li class="step"><span class="num">03</span><h3>Rasoir droit</h3><p>Une lame neuve à chaque client, affûtée au cuir. Contours nets, à l'ancienne.</p></li>
+        <li class="step"><span class="num">04</span><h3>Finitions</h3><p>Huile, baume, coiffage. On vous montre comment refaire le geste chez vous.</p></li>
+      </ol>
+      <div class="steps-bar" aria-hidden="true"><i></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- TARIFS : fauteuil 3D -->
+<section id="tarifs" class="tarifs-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">La carte</p>
+      <h2 class="h2" data-a="slash">Prestations &amp; tarifs</h2>
+      <p class="lead">Tarifs d'exemple pour la démonstration. Survolez ou touchez une prestation : le fauteuil se tourne vers elle.</p>
+    </div>
+    <div class="tarifs-grid">
+      <ul class="tarifs" id="tarifs-liste"></ul>
+      <div class="chair-col">
+        <div class="chair-stage" data-view="chair"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 120 140"><rect x="35" y="10" width="50" height="60" rx="10" fill="#5a1c1c"/><rect x="25" y="70" width="70" height="18" rx="8" fill="#5a1c1c"/><rect x="56" y="88" width="8" height="30" fill="#bbb"/><ellipse cx="60" cy="122" rx="34" ry="6" fill="#bbb"/></svg></div>
+          <div class="chair-label" aria-live="polite"><span class="cl-name">Coupe homme</span><span class="cl-price">25,00 €</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIE horizontale -->
+<section id="galerie" class="galerie">
+  <div class="gal-pin">
+    <div class="gal-track">
+      <div class="gal-intro">
+        <p class="kicker">La galerie</p>
+        <h2 class="h2" data-a="lines">Quelques coupes<br>et barbes réalisées<br>en salon.</h2>
+        <div class="clipper-stage" data-view="clipper"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 60 160"><rect x="15" y="20" width="30" height="130" rx="15" fill="#222"/><rect x="10" y="8" width="40" height="16" rx="3" fill="#c9a063"/></svg></div></div>
+        <p class="gal-hint" aria-hidden="true"><span class="fine-only">Molette</span><span class="touch-only">Glissez</span> pour parcourir →</p>
+      </div>
+      <figure class="shot"><div class="shot-in"><img src="photos/coupe2.webp" alt="Dégradé net sur un jeune homme" width="800" height="600" loading="lazy"></div><figcaption><b>01</b> Dégradé fondu</figcaption></figure>
+      <figure class="shot tall"><div class="shot-in"><img src="photos/coupe5.webp" alt="Rasage au rasoir droit" width="800" height="600" loading="lazy"></div><figcaption><b>02</b> Rasage au rasoir droit</figcaption></figure>
+      <figure class="shot"><div class="shot-in"><img src="photos/coupe3.webp" alt="Barbier au travail devant le miroir, en noir et blanc" width="800" height="600" loading="lazy"></div><figcaption><b>03</b> Taille de barbe</figcaption></figure>
+      <figure class="shot tall"><div class="shot-in"><img src="photos/coupe1.webp" alt="Barbiers au travail dans le salon" width="800" height="600" loading="lazy"></div><figcaption><b>04</b> Le salon un samedi</figcaption></figure>
+      <figure class="shot"><div class="shot-in"><img src="photos/coupe4.webp" alt="Enfants à la sortie du salon de coiffure" width="800" height="600" loading="lazy"></div><figcaption><b>05</b> Coupes enfants</figcaption></figure>
+      <div class="gal-end"><p class="h2 serif">Votre tour ?</p><a class="btn" href="#rdv"><span>Réserver un fauteuil</span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- RÉSERVATION -->
+<section id="rdv" class="rdv">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">L'équipe · Réservation</p>
+      <h2 class="h2" id="rdv-title" data-a="chars">Prendre rendez-vous</h2>
+      <p class="lead">Trois barbiers fictifs. Choisissez le vôtre, puis votre prestation et votre créneau.</p>
+    </div>
+
+    <form id="order" novalidate>
+      <fieldset class="fs">
+        <legend><span class="n">1</span> Votre barbier</legend>
+        <div class="barbers" role="radiogroup" aria-label="Barbier">
+          <button type="button" class="barber" role="radio" aria-checked="false" data-b="Matteo"><span class="flip">
+            <span class="face front"><span class="ava">M</span><b>Matteo</b><small>Dégradés et coupes classiques. 12 ans de métier.</small></span>
+            <span class="face back"><span class="tick">✓</span><b>Matteo</b><small>Votre barbier. Spécialité : le dégradé fondu.</small></span></span></button>
+          <button type="button" class="barber" role="radio" aria-checked="false" data-b="Yanis"><span class="flip">
+            <span class="face front"><span class="ava">Y</span><b>Yanis</b><small>Barbes, contours et rasage à l'ancienne.</small></span>
+            <span class="face back"><span class="tick">✓</span><b>Yanis</b><small>Votre barbier. Spécialité : le rasoir droit.</small></span></span></button>
+          <button type="button" class="barber" role="radio" aria-checked="false" data-b="Lou"><span class="flip">
+            <span class="face front"><span class="ava">L</span><b>Lou</b><small>Coupes longues, enfants et conseils d'entretien.</small></span>
+            <span class="face back"><span class="tick">✓</span><b>Lou</b><small>Votre barbière. Spécialité : coupes longues et enfants.</small></span></span></button>
+          <button type="button" class="barber any" role="radio" aria-checked="true" data-b="Peu importe"><span class="flip">
+            <span class="face front"><span class="ava">?</span><b>Peu importe</b><small>Le premier barbier libre.</small></span>
+            <span class="face back"><span class="tick">✓</span><b>Peu importe</b><small>Le premier barbier libre vous accueille.</small></span></span></button>
+        </div>
+      </fieldset>
+
+      <fieldset class="fs">
+        <legend><span class="n">2</span> La prestation</legend>
+        <div class="chips" id="prest" role="radiogroup" aria-label="Prestation"></div>
+      </fieldset>
+
+      <fieldset class="fs">
+        <legend><span class="n">3</span> Le jour</legend>
+        <div class="days" id="days" role="radiogroup" aria-label="Date"></div>
+      </fieldset>
+
+      <fieldset class="fs">
+        <legend><span class="n">4</span> Le créneau</legend>
+        <div class="slots" id="slots" role="radiogroup" aria-label="Créneaux disponibles"></div>
+      </fieldset>
+
+      <fieldset class="fs">
+        <legend><span class="n">5</span> Vos coordonnées</legend>
+        <div class="fields">
+          <label class="fld"><span>Nom</span><input type="text" id="nom" autocomplete="name" required></label>
+          <label class="fld"><span>Téléphone</span><input type="tel" id="tel" placeholder="00 00 00 00 00" required></label>
+        </div>
+      </fieldset>
+
+      <aside class="ticket" aria-label="Votre sélection">
+        <p class="t-row"><span>Barbier</span><b id="t-barbier">Peu importe</b></p>
+        <p class="t-row"><span>Prestation</span><b id="t-prest">—</b></p>
+        <p class="t-row"><span>Jour</span><b id="t-jour">—</b></p>
+        <p class="t-row t-slot"><span>Créneau</span><b id="t-slot">—</b></p>
+        <p class="t-total">Total <strong id="tot">—</strong></p>
+        <button class="btn" id="valider" type="submit"><span>Confirmer (démo)</span></button>
+        <p id="msg" role="status"></p>
+      </aside>
+    </form>
+
+    <div class="done" id="done" hidden>
+      <div class="done-stage" data-view="cross"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 120 120"><path d="M20 20 L100 100 M100 20 L20 100" stroke="#c9a063" stroke-width="8" stroke-linecap="round"/></svg></div></div>
+      <div class="steam" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="recap" tabindex="-1">
+        <p class="kicker">C'est noté</p>
+        <h3 class="h3 serif">Votre fauteuil vous attend.</h3>
+        <dl id="recap-list"></dl>
+        <p class="recap-demo"><strong>Démo : aucune demande réelle envoyée.</strong></p>
+        <button type="button" class="btn ghost" id="again"><span>Nouvelle réservation</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABONNEMENT -->
+<section id="abonnement" class="abo">
+  <div class="wrap">
+    <div class="sec-head center">
+      <p class="kicker">Pour ne plus y penser</p>
+      <h2 class="h2" data-a="lines">L'abonnement</h2>
+    </div>
+    <div class="plans">
+      <article class="plan"><h3>Classique</h3><p class="price"><span class="pr-val" data-v="39">39 €</span> <small>/ mois</small></p><p>1 coupe par mois, réservation prioritaire.</p></article>
+      <article class="plan pop"><p class="badge">Le plus choisi</p><h3>Complet</h3><p class="price"><span class="pr-val" data-v="59">59 €</span> <small>/ mois</small></p><p>1 coupe + 1 taille de barbe par mois, serviette chaude incluse.</p></article>
+      <article class="plan"><h3>Illimité</h3><p class="price"><span class="pr-val" data-v="89">89 €</span> <small>/ mois</small></p><p>Coupes et barbes à volonté (1 passage par semaine max.).</p></article>
+    </div>
+    <p class="center"><a class="btn" href="#rdv" data-abo="1"><span>S'abonner (démo)</span></a></p>
+  </div>
+</section>
+
+<!-- CARTES CADEAUX -->
+<section id="cadeaux" class="cadeaux">
+  <div class="wrap split">
+    <div>
+      <p class="kicker">Pour Noël, la fête des pères, un anniversaire</p>
+      <h2 class="h2" data-a="slash">Cartes cadeaux</h2>
+      <p>Valable 1 an dans le salon, sur toutes les prestations. Envoyée par courriel ou remise en main propre.</p>
+      <div class="gifts" role="group" aria-label="Montant de la carte cadeau">
+        <button type="button" class="gift btn ghost" data-amt="25"><span>25 €</span></button><button type="button" class="gift btn ghost on" data-amt="50"><span>50 €</span></button><button type="button" class="gift btn ghost" data-amt="80"><span>80 €</span></button>
+      </div>
+      <p id="gift-msg" role="status"></p>
+    </div>
+    <div class="gcard-wrap">
+      <div class="gcard" aria-hidden="true">
+        <div class="gc-foil"></div>
+        <p class="gc-brand">Barberie <em>Valdombre</em></p>
+        <p class="gc-amt"><span id="gc-amt">50</span> €</p>
+        <p class="gc-sub">Carte cadeau · valable 1 an</p>
+        <p class="gc-no">N° DÉMO-0000</p>
+      </div>
+      <img class="gc-photo" src="photos/cadeau.webp" alt="Cadeaux emballés et carte sur une table" width="800" height="533" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- AVIS : mousse essuyée -->
+<section id="avis" class="avis">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2" data-a="chars">Ils sont repartis rasés de près</h2>
+      <p class="lead">Avis d'exemple, rédigés pour la démonstration.</p>
+    </div>
+    <div class="reviews">
+      <blockquote class="rev"><p>« Le meilleur dégradé que j'aie eu. Matteo écoute ce qu'on veut. »</p><cite>— Thomas R. · exemple</cite><span class="foam" aria-hidden="true"></span></blockquote>
+      <blockquote class="rev"><p>« Le rasage à la serviette chaude, un vrai moment de pause. »</p><cite>— Antoine G. · exemple</cite><span class="foam" aria-hidden="true"></span></blockquote>
+      <blockquote class="rev"><p>« Mon fils de 8 ans adore y aller. Lou est patient. »</p><cite>— Nadia K. · exemple</cite><span class="foam" aria-hidden="true"></span></blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- HORAIRES & CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap split">
+    <div>
+      <h2 class="h2" data-a="lines">Horaires &amp; adresse</h2>
+      <p class="open-now" id="open-now"><i></i><span>—</span></p>
+      <table class="hours"><caption class="sr">Horaires d'ouverture</caption>
+        <tr data-d="2,3,4,5"><th>Mardi – Vendredi</th><td>9 h – 19 h</td></tr>
+        <tr data-d="6"><th>Samedi</th><td>9 h – 18 h</td></tr>
+        <tr data-d="0,1"><th>Dimanche, lundi</th><td>Fermé</td></tr></table>
+      <address>5 rue du Cadran, 00000 Port-Lunaire<br><em>(adresse fictive)</em></address>
+      <p><a class="link" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">Voir sur la carte (lien à remplacer)</a></p>
+    </div>
+    <div>
+      <h2 class="h2" data-a="lines">Contact</h2>
+      <p>Téléphone : <a class="link" href="tel:+33000000000">00 00 00 00 00</a> <em>(numéro fictif)</em></p>
+      <p>Courriel : <a class="link" href="mailto:rdv@exemple.invalid">rdv@exemple.invalid</a> <em>(adresse fictive)</em></p>
+      <p>Annulation gratuite jusqu'à 24 h avant le rendez-vous.</p>
+      <p class="big-cta"><a class="btn" href="#rdv"><span>Prendre rendez-vous</span></a></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p class="foot-brand serif">Barberie <em>Valdombre</em></p>
+  <p><strong>Site de démonstration — commerce fictif.</strong> Barberie Valdombre n'existe pas ; aucun rendez-vous réel, aucun paiement.</p>
+  <details><summary>Mentions légales (à remplir)</summary>
+    <p>Éditeur : [raison sociale] — [forme juridique] — SIRET [à compléter]<br>Adresse : [à compléter] · Directeur de la publication : [à compléter]<br>Hébergeur : [nom, adresse] · Données personnelles : [politique à rédiger]<br>Photos : licence CC0, voir <a href="photos/SOURCES.md">sources</a>.</p>
+  </details>
+</footer>
+<div class="demo-bar bottom">Site de démonstration — commerce fictif</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.1/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.1/dist/ScrollTrigger.min.js"></script>
+<script src="app.js"></script>
+<script type="module" src="scene.js"></script>
+</body>
+</html>
