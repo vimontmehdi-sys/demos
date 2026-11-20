@@ -176,7 +176,8 @@
     if (!ANIM) { show(); S.cross.t = 1; $('.recap').focus(); return; }
     G.to(form, { opacity: 0, y: 20, duration: .4, ease: 'power2.in', onComplete: () => {
       show(); ScrollTrigger.refresh();
-      done.scrollIntoView({ behavior: 'auto', block: 'start' }); window.scrollBy(0, -90);
+      // Un seul défilement instantané : sur Safari/WebKit, scrollIntoView puis scrollBy s'interrompaient (grand vide noir).
+      requestAnimationFrame(() => window.scrollTo({ top: done.getBoundingClientRect().top + scrollY - 80, behavior: 'instant' }));
       const tl = G.timeline();
       tl.to(S.cross, { t: 1, duration: 2.2, ease: 'none' }, 0);
       $$('.steam i').forEach((p, k) => {
